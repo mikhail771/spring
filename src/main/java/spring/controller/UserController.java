@@ -2,7 +2,6 @@ package spring.controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +37,7 @@ public class UserController {
 
     @GetMapping(value = "/{id}")
     public UserResponseDto getUser(@PathVariable("id") Long userId) {
-        User user = userService.getUserById(userId).get();
+        User user = userService.getUserById(userId);
         return getMappedUserToDto(user);
     }
 

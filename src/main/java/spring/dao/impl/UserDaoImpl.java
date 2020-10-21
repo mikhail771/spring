@@ -1,6 +1,7 @@
 package spring.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -50,6 +51,17 @@ public class UserDaoImpl implements UserDao {
             return users;
         } catch (Exception e) {
             throw new RuntimeException("Can't get users list.", e);
+        }
+    }
+
+    @Override
+    public Optional<User> getById(Long userId) {
+        log.info("Trying to get user by id " + userId);
+        try (Session session = sessionFactory.openSession()) {
+            Query<User> query = session.createQuery("from User "
+                    + "where id = :id ", User.class);
+            query.setParameter("id", userId);
+            return query.uniqueResultOptional();
         }
     }
 }
